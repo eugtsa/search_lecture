@@ -2,11 +2,13 @@ from domain.action import Action
 from domain.world import World
 from domain.exceptions import QuitGameException
 import pygame
+from time import sleep
 
 
 class KeyboardAgent:
     def get_action(self, world:World)->Action:
         while True:
+            sleep(0.05)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     raise QuitGameException()

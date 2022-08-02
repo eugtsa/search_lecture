@@ -1,5 +1,6 @@
 import pygame
 from domain.exceptions import QuitGameException
+from time import sleep
 
 def press_any_key():
     while True:
@@ -9,3 +10,4 @@ def press_any_key():
 
             if event.type == pygame.KEYDOWN:
                 return
+        sleep(0.05)
