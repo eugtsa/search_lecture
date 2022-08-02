@@ -1,5 +1,4 @@
-from tangled_up_in_unicode import age
-from level_loader import LevelLoader
+from helpers.level_loader import LevelLoader
 from domain.rules import Rules
 from domain.world import World
 from domain.agents.keyboard_agent import KeyboardAgent
