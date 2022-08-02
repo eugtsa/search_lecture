@@ -1,6 +1,7 @@
 import pygame
-from domain.exceptions import QuitGameException
+from helpers.exceptions import QuitGameException, RetryLevelException
 from time import sleep
+
 
 def press_any_key():
     while True:
@@ -9,5 +10,7 @@ def press_any_key():
                 raise QuitGameException()
 
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    raise RetryLevelException()
                 return
         sleep(0.05)

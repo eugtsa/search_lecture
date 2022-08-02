@@ -1,5 +1,7 @@
 class Rules:
-    def __init__(self, dot_score=10, move_score=-1, finish_score=20, hit_wall_score=-3) -> None:
+    def __init__(
+        self, dot_score=10, move_score=-1, finish_score=20, hit_wall_score=-3
+    ) -> None:
         self._dot_score = dot_score
         self._move_score = move_score
         self._finish_score = finish_score

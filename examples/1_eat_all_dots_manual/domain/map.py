@@ -1,8 +1,16 @@
 from domain.point import Point
 from typing import List
 
+
 class Map:
-    def __init__(self, size_x:int, size_y:int, walls:List[Point], start_pos:Point, finish_pos:Point) -> None:
+    def __init__(
+        self,
+        size_x: int,
+        size_y: int,
+        walls: List[Point],
+        start_pos: Point,
+        finish_pos: Point,
+    ) -> None:
         self._size_x = size_x
         self._size_y = size_y
         self._walls = set(walls)

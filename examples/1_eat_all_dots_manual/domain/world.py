@@ -4,8 +4,11 @@ from domain.action import Action
 from domain.map import Map
 from typing import Set
 
+
 class World:
-    def __init__(self, rules:Rules, map:Map, dots:Set[Point], cur_pos:Point, cur_score:int) -> None:
+    def __init__(
+        self, rules: Rules, map: Map, dots: Set[Point], cur_pos: Point, cur_score: int
+    ) -> None:
         self._rules = rules
         self._map = map
         self._dots = dots
@@ -35,15 +38,15 @@ class World:
         # parse actions
         new_pos = self._cur_pos
         new_dots = self._dots
-        
+
         if action == Action.LEFT:
-            new_pos = Point(self._cur_pos.x-1,self._cur_pos.y)
+            new_pos = Point(self._cur_pos.x - 1, self._cur_pos.y)
         elif action == Action.RIGHT:
-            new_pos = Point(self._cur_pos.x+1,self._cur_pos.y)
+            new_pos = Point(self._cur_pos.x + 1, self._cur_pos.y)
         elif action == Action.UP:
-            new_pos = Point(self._cur_pos.x,self._cur_pos.y-1)
+            new_pos = Point(self._cur_pos.x, self._cur_pos.y - 1)
         elif action == Action.DOWN:
-            new_pos = Point(self._cur_pos.x,self._cur_pos.y+1)
+            new_pos = Point(self._cur_pos.x, self._cur_pos.y + 1)
 
         # get score change
         score_change = self._rules.move_score
@@ -51,11 +54,11 @@ class World:
         if new_pos in self._map.walls:
             score_change = self._rules.hit_wall_score
             new_pos = self._cur_pos
-        
+
         elif new_pos in self._dots:
             score_change = self._rules.dot_score
-            new_dots = set([d for d in self._dots if d!=new_pos])
-        
+            new_dots = set([d for d in self._dots if d != new_pos])
+
         elif new_pos == self._map.finish_pos:
             score_change = self._rules.finish_score
 
@@ -65,5 +68,5 @@ class World:
             map=self._map,
             dots=new_dots,
             cur_pos=new_pos,
-            cur_score=self._cur_score+score_change
+            cur_score=self._cur_score + score_change,
         )
