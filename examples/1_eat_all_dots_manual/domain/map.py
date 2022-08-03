@@ -21,6 +21,9 @@ class Map:
     def start_pos(self):
         return self._start_pos
 
+    def copy(self):
+        return Map(self.size_x,self.size_y,[Point(w) for w in self.walls],Point(self.start_pos),Point(self._finish_pos))
+
     @property
     def finish_pos(self):
         return self._finish_pos

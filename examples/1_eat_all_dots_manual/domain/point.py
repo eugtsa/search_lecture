@@ -14,6 +14,12 @@ class Point:
     def __hash__(self):
         return self.x * 100 + self.y
 
+    def __str__(self):
+        return 'Point(x={},y={})'.format(self.x,self.y)
+
+    def __repr__(self):
+        return self.__str__()
+
     @property
     def x(self):
         return self._x
