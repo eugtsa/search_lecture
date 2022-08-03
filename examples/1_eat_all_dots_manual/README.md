@@ -10,16 +10,16 @@ This game is used to demonstrate different search algorithms in "AI crash course
 
 Run `make install` in your terminal (MacOS and Ubuntu based distros supported):
 
-    ```
-    $ make install
-    ```
+```shell
+make install
+```
 
 ## How to play the game?
 
 Run `make run` in bash console:
 
-```bash
-$ make run
+```shell
+make run
 ```
 
 There are 2 ways to play this game:
@@ -37,7 +37,7 @@ By default, the game will start in keyboard mode. Keyboard controls:
 To run your agent, add the argument `agent` to the game start command like this:
 
 ```shell
-$ make run agent=random_walk_agent 
+make run agent=random_walk_agent 
 ```
 
 To start the game with your agent, put your agent to the ./agents folder and run the game with the name of class of your agent!
