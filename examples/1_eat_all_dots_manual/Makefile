@@ -4,7 +4,7 @@ run:
 	$(PWD)/miniconda_pygame/bin/python ./game.py --agent $(agent)
 
 install:
-	bash -c "if [[ $OSTYPE == 'darwin'* ]]; then make install_macos; else make install_linux; fi"
+	bash -c "if [[ `uname` == 'Darwin' ]]; then make install_macos; else make install_linux; fi"
 
 install_linux:
 	wget https://repo.anaconda.com/miniconda/Miniconda3-py38_4.12.0-Linux-x86_64.sh -O miniconda.sh
