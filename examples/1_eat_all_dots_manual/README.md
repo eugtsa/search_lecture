@@ -18,9 +18,9 @@ Run `make install` in your terminal (MacOS and Ubuntu based distros supported):
 
 Run `make run` in bash console:
 
-    ```
-    $ make run
-    ```
+```bash
+$ make run
+```
 
 There are 2 ways to play this game:
 
