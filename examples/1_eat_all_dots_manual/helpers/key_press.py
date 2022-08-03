@@ -12,5 +12,7 @@ def press_any_key():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     raise RetryLevelException()
+                if event.key == pygame.K_q:
+                    raise QuitGameException()
                 return
         sleep(0.05)

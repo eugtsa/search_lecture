@@ -1,13 +1,15 @@
+from ast import Str
 import os
 from domain.point import Point
 from domain.map import Map
+from typing import Tuple, List
 
 
 class LevelLoader:
-    def list_levels(self):
+    def list_levels(self) -> List[Str]:
         return sorted(os.listdir("levels"))
 
-    def load_level(self, filename):
+    def load_level(self, filename: str) -> Tuple[Map, List[Point]]:
         with open("levels" + os.sep + filename) as f:
             max_size_x = 0
             max_size_y = 0

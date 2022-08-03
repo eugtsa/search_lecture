@@ -19,11 +19,11 @@ class WorldRenderSimple:
     WHITE = (200, 200, 200)
     YELLOW = (255, 174, 66)
 
-    def __init__(self, size_x, size_y) -> None:
+    def __init__(self, size_x, size_y,agent_name) -> None:
         global SCREEN, CLOCK
         # pygame.init()
         SCREEN = pygame.display.set_mode((size_x * SCALE, (size_y + 1) * SCALE))
-        pygame.display.set_caption(AGENT_NAME)
+        pygame.display.set_caption(agent_name)
         CLOCK = pygame.time.Clock()
         SCREEN.fill(self.BLACK)
 

@@ -9,7 +9,7 @@ from helpers.exceptions import (
 from helpers.level_loader import LevelLoader
 from domain.rules import Rules
 from domain.world import World
-from helpers import world_renderer_simple
+from helpers.world_renderer_simple import WorldRenderSimple
 from helpers.key_press import press_any_key
 import importlib
 import argparse
@@ -31,8 +31,7 @@ def raise_if_special_keys_pressed():
 
 
 def play_level(current_world: World, agent_class: BaseAgent):
-    world_renderer_simple.AGENT_NAME = AGENT_NAME
-    wrs = world_renderer_simple.WorldRenderSimple(current_world.map.size_x, current_world.map.size_y)
+    wrs = WorldRenderSimple(current_world.map.size_x, current_world.map.size_y, agent_name=AGENT_NAME)
 
     agent = agent_class()
 
