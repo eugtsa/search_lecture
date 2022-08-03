@@ -2,11 +2,9 @@ from domain.action import Action
 import pygame
 from time import sleep
 
-from domain.agents.base_agent import BaseAgent
 from domain.world import World
 from helpers.exceptions import QuitGameException, RetryLevelException, NextLevelException
-from domain.agents.base_agent import BaseAgent
-
+from domain.base_agent import BaseAgent
 
 
 class KeyboardAgent(BaseAgent):
@@ -30,4 +28,6 @@ class KeyboardAgent(BaseAgent):
                         raise NextLevelException()
                     if event.key == pygame.K_r:
                         raise RetryLevelException()
+                    if event.key == pygame.K_q:
+                        raise QuitGameException()
                     

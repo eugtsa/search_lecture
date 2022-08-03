@@ -7,17 +7,28 @@ from typing import Set
 
 class World:
     def __init__(
-        self, rules: Rules, map: Map, dots: Set[Point], cur_pos: Point, cur_score: int
+        self,
+        rules: Rules,
+        map: Map,
+        dots: Set[Point],
+        cur_pos: Point,
+        cur_score: int,
+        tick_num: int = 0,
     ) -> None:
         self._rules = rules
         self._map = map
         self._dots = dots
         self._cur_pos = cur_pos
         self._cur_score = cur_score
+        self._tick_num = tick_num
 
     @property
     def map(self):
         return self._map
+
+    @property
+    def tick_num(self):
+        return self._tick_num
 
     @property
     def dots(self):
@@ -34,7 +45,9 @@ class World:
     def is_finished(self):
         return self._cur_pos == self._map.finish_pos
 
-    def apply_action(self, action):
+    def apply_action(self, action: Action):
+        # if action is not Action.ALL_ACTIONS:
+        #    raise NotImplementedError()
         # parse actions
         new_pos = self._cur_pos
         new_dots = self._dots
@@ -69,4 +82,5 @@ class World:
             dots=new_dots,
             cur_pos=new_pos,
             cur_score=self._cur_score + score_change,
+            tick_num=self.tick_num + 1,
         )

@@ -3,3 +3,4 @@ class Action:
     DOWN = 1
     LEFT = 2
     RIGHT = 3
+    ALL_ACTIONS = {0,1,2,3}

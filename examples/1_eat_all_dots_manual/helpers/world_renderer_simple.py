@@ -5,7 +5,7 @@ import pygame
 
 pygame.init()
 
-SCALE = 30
+SCALE = 50
 SPRITES = {
     "pac": "./images/pac.png",
     "wall": "./images/wall.png",
@@ -45,7 +45,7 @@ class WorldRenderSimple:
             self._draw_dot(d)
 
         self._draw_finish_pos(world.map.finish_pos)
-        self._draw_score(world._cur_score, world.map)
+        self._draw_score(world._cur_score, world.map, world.tick_num)
         self._draw_pac_man(world.cur_pos)
         if world.is_finished():
             self._draw_finish(world._cur_score, world.map)
@@ -73,9 +73,15 @@ class WorldRenderSimple:
     def _draw_wall(self, pac_pos: Point):
         self._draw_sprite(pac_pos, self._wall)
 
-    def _draw_score(self, score, map: Map):
+    def _draw_score(self, score, map: Map, tick_num: int):
         GAME_FONT.render_to(
             SCREEN, (0, map.size_y * SCALE), "SCORE:{}".format(score), self.WHITE
+        )
+        GAME_FONT.render_to(
+            SCREEN,
+            (0, (map.size_y + 0.5) * SCALE),
+            "TICK:{}".format(tick_num),
+            self.WHITE,
         )
 
     def _draw_dot(self, dot_pos):

@@ -16,8 +16,11 @@ There are 2 ways to play this game:
 By default, the game will start in keyboard mode. Keyboard controls:
 
 - arrows keys to move the pacman
-- 'R' key to restart the level
-- 'N' key to skip the level
+- 'R' to restart the level
+- 'N' to skip the level
+- 'Q' to quit the game
+
+To run your agent, add the argument `-a` to the game start command
 
 To start the game with your agent, put your agent to the ./agents folder and run the game with the name of class of your agent!
 
