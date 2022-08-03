@@ -4,9 +4,23 @@ This is the "Eat-them-all" game!
 
 ## Why do we need it?
 
-This game demonstrate different search algorithms.
+This game is used to demonstrate different search algorithms in "AI crash course: Search" lecture.
+
+## How to install all dependencies?
+
+Run `make install` in your terminal (MacOS and Ubuntu based distros supported):
+
+    ```bash
+    $ make install
+    ```
 
 ## How to play the game?
+
+Run `make run` in bash console:
+
+    ```bash
+    $ make run
+    ```
 
 There are 2 ways to play this game:
 
@@ -20,7 +34,11 @@ By default, the game will start in keyboard mode. Keyboard controls:
 - 'N' to skip the level
 - 'Q' to quit the game
 
-To run your agent, add the argument `-a` to the game start command
+To run your agent, add the argument `agent` to the game start command like this:
+
+    ```bash
+    $ make run agent=random_walk_agent 
+    ```
 
 To start the game with your agent, put your agent to the ./agents folder and run the game with the name of class of your agent!
 
