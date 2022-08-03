@@ -10,7 +10,7 @@ This game is used to demonstrate different search algorithms in "AI crash course
 
 Run `make install` in your terminal (MacOS and Ubuntu based distros supported):
 
-    ```bash
+    ```shell
     $ make install
     ```
 
@@ -18,7 +18,7 @@ Run `make install` in your terminal (MacOS and Ubuntu based distros supported):
 
 Run `make run` in bash console:
 
-    ```console
+    ```shell
     $ make run
     ```
 
@@ -36,7 +36,7 @@ By default, the game will start in keyboard mode. Keyboard controls:
 
 To run your agent, add the argument `agent` to the game start command like this:
 
-    ```console
+    ```shell
     $ make run agent=random_walk_agent 
     ```
 
