@@ -9,12 +9,13 @@ from helpers.exceptions import (
 from helpers.level_loader import LevelLoader
 from domain.rules import Rules
 from domain.world import World
-from helpers.world_renderer_simple import WorldRenderSimple
+from helpers import world_renderer_simple
 from helpers.key_press import press_any_key
 import importlib
 import argparse
 import pygame
 
+global AGENT_NAME
 
 def raise_if_special_keys_pressed():
     for event in pygame.event.get():
@@ -30,7 +31,8 @@ def raise_if_special_keys_pressed():
 
 
 def play_level(current_world: World, agent_class: BaseAgent):
-    wrs = WorldRenderSimple(current_world.map.size_x, current_world.map.size_y)
+    world_renderer_simple.AGENT_NAME = AGENT_NAME
+    wrs = world_renderer_simple.WorldRenderSimple(current_world.map.size_x, current_world.map.size_y)
 
     agent = agent_class()
 
@@ -55,7 +57,7 @@ def to_classname(module_name: str):
 
 def load_agent_class(agent_name: str):
     agent_module_name = agent_name
-    agent_module = importlib.import_module("domain.agents." + agent_module_name)
+    agent_module = importlib.import_module("agents." + agent_module_name)
     return getattr(agent_module, to_classname(agent_module_name))
 
 
@@ -88,4 +90,5 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
+    AGENT_NAME = args.agent
     main(args)

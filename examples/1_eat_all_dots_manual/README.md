@@ -8,7 +8,7 @@ This game is used to demonstrate different search algorithms in "AI crash course
 
 ## How to install all dependencies?
 
-Run `make install` in your terminal (MacOS and Ubuntu based distros supported):
+Run `make install` in your terminal (MacOS and Ubuntu based distros are supported):
 
 ```shell
 make install
@@ -29,18 +29,18 @@ There are 2 ways to play this game:
 
 By default, the game will start in keyboard mode. Keyboard controls:
 
-- arrows keys to move the pacman
+- arrow keys to move the pacman
 - 'R' to restart the level
 - 'N' to skip the level
 - 'Q' to quit the game
 
-To run your agent, add the argument `agent` to the game start command like this:
+Add the argument `agent` to the game start command to run your agent. For example:
 
 ```shell
 make run agent=random_walk_agent 
 ```
 
-To start the game with your agent, put your agent to the ./agents folder and run the game with the name of class of your agent!
+To start the game with your own custom agent put your agent to the ./agents folder. Agent module should be named in underscore notation (my_custom_agent) and agent class in it should be named the same but in camel case notation (MyCustomAgent)
 
 ### Game goal
 
@@ -48,7 +48,7 @@ Target of the game is to get maximum score in the end! All scores of completed l
 
 ### Game rules
 
-Pacman will move into pressed key direction. Each step of pacman will decrease the score by 1 unit. Each bump into the wall will not only stop pacman but also decrease the score by 3 units. Each small dot eaten by pacman will increase score by 10 units. Each finished level will add 20 units to the final score.
+Each pacman step will decrease the score by 1 credit. Each bump into the wall will not only stop pacman but also decrease the score by 3 credits. Each small dot eaten by pacman will increase score by 10 credits. Each finished level will add 20 credits to the final score.
 
 ## Who is the author?
 

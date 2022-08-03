@@ -23,6 +23,7 @@ class WorldRenderSimple:
         global SCREEN, CLOCK
         # pygame.init()
         SCREEN = pygame.display.set_mode((size_x * SCALE, (size_y + 1) * SCALE))
+        pygame.display.set_caption(AGENT_NAME)
         CLOCK = pygame.time.Clock()
         SCREEN.fill(self.BLACK)
 
