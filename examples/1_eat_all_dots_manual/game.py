@@ -73,7 +73,7 @@ def main(args):
                 map, dots = ll.load_level(level_name)
                 current_world = World(Rules(), map, dots, map.start_pos, total_score)
                 score = play_level(current_world, agent_class)
-                total_score += score
+                total_score = score
                 level_finished = True
             except NextLevelException as e:
                 level_finished = True
