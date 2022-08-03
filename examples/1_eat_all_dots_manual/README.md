@@ -36,7 +36,7 @@ By default, the game will start in keyboard mode. Keyboard controls:
 
 To run your agent, add the argument `agent` to the game start command like this:
 
-```
+```shell
 $ make run agent=random_walk_agent 
 ```
 
