@@ -1,49 +1,40 @@
-from ctypes.wintypes import WPARAM
 from domain.action import Action
+
 from domain.world import World
 from domain.base_agent import BaseAgent
 from domain.point import Point
 import random
-from queue import Queue
 
 
-class BfsAgent(BaseAgent):
+class BetterRandomWalkAgent(BaseAgent):
     def __init__(self) -> None:
         super().__init__()
         self._actions = None
 
-    def do_bfs(self, world):
-        # remember where we have been already
-        states_been_at = {
-            self.get_world_hashstr(world),
-        }
-        states_queue = Queue()
-        states_queue.put(world)
+    def do_random_walks(self, world: World, n_trials: int = 10):
+        trials_ends = list()
+        for t in range(n_trials):
+            trial_end = False
 
-        possible_ends = list()
-
-        while not states_queue.empty():
-            state_to_explore = states_queue.get()
-            if state_to_explore.is_finished():
-                possible_ends.append(state_to_explore)
-            else:
-                for action in self.get_allowed_actions(state_to_explore):
-                    new_state = state_to_explore.copy().apply_action(action)
-                    new_world_hashstr = self.get_world_hashstr(new_state)
-                    if new_world_hashstr not in states_been_at:
-                        new_state.prev_world = state_to_explore
-                        new_state.action_from_prev_taken = action
-                        states_been_at.add(new_world_hashstr)
-                        states_queue.put(new_state)
+            state_to_explore = world
+            while trial_end is False:
+                action = random.choice(self.get_allowed_actions(state_to_explore))
+                new_state = state_to_explore.copy().apply_action(action)
+                new_state.prev_world = state_to_explore
+                new_state.action_from_prev_taken = action
+                state_to_explore = new_state
+                if new_state.is_finished():
+                    trial_end = True
+                    trials_ends.append(new_state)
 
         # getting maximum end for game
-        max_end = possible_ends[0]
+        max_end = trials_ends[0]
         max_end_score = max_end.score
-        for end in possible_ends:
+        for end in trials_ends:
             if end.score > max_end_score:
                 max_end_score = end.score
                 max_end = end
-        print("Possible endgame scores: " + str([end.score for end in possible_ends]))
+        print("Possible endgame scores: " + str([end.score for end in trials_ends]))
 
         # backtracking the actions from best end
         actions = list()
@@ -55,12 +46,9 @@ class BfsAgent(BaseAgent):
 
     def get_action(self, world: World) -> Action:
         if self._actions is None:
-            self._actions = self.do_bfs(world)
+            self._actions = self.do_random_walks(world, n_trials=40)
 
         return self._actions.pop()
-
-    def get_world_hashstr(self, world: World):
-        return "{},{},{}".format(world.cur_pos.x, world.cur_pos.y, world.dots)
 
     def get_allowed_actions(self, world: World):
         allowed_actions = list()
@@ -75,4 +63,5 @@ class BfsAgent(BaseAgent):
             allowed_actions.append(Action.UP)
         if Point(cur_pos.x, cur_pos.y + 1) not in world.map.walls:
             allowed_actions.append(Action.DOWN)
+
         return allowed_actions

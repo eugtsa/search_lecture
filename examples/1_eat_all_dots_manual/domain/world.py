@@ -50,9 +50,6 @@ class World:
         return self._cur_pos == self._map.finish_pos
 
     def apply_action(self, action: Action):
-        # if action is not Action.ALL_ACTIONS:
-        #    raise NotImplementedError()
-        # parse actions
         new_pos = self._cur_pos
         new_dots = self._dots
 

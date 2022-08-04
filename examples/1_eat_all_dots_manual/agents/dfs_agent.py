@@ -3,25 +3,30 @@ from domain.action import Action
 from domain.world import World
 from domain.base_agent import BaseAgent
 from domain.point import Point
-import random
-from queue import Queue
+from queue import LifoQueue
 
 
-class NaiveBfsAgent(BaseAgent):
-    def get_action(self, world: World) -> Action:
-        # remember where we've been already
+class DfsAgent(BaseAgent):
+    def __init__(self) -> None:
+        super().__init__()
+        self._actions = None
+
+    def do_bfs(self, world):
+        # remember where we have been already
         states_been_at = {
             self.get_world_hashstr(world),
         }
-        states_queue = Queue()
-        states_queue.put(world.copy())
 
-        possible_goals = list()
+        # this is the only difference for Depth-first approach - last state is explored first
+        states_queue = LifoQueue()
+        states_queue.put(world)
+
+        possible_ends = list()
 
         while not states_queue.empty():
             state_to_explore = states_queue.get()
             if state_to_explore.is_finished():
-                possible_goals.append(state_to_explore)
+                possible_ends.append(state_to_explore)
             else:
                 for action in self.get_allowed_actions(state_to_explore):
                     new_state = state_to_explore.copy().apply_action(action)
@@ -33,21 +38,27 @@ class NaiveBfsAgent(BaseAgent):
                         states_queue.put(new_state)
 
         # getting maximum end for game
-        max_end = possible_goals[0]
+        max_end = possible_ends[0]
         max_end_score = max_end.score
-        for end in possible_goals:
+        for end in possible_ends:
             if end.score > max_end_score:
                 max_end_score = end.score
                 max_end = end
-        print("Possible scores: " + str([end.score for end in possible_goals]))
+        print("Possible endgame scores: " + str([end.score for end in possible_ends]))
 
         # backtracking the actions from best end
         actions = list()
-        while "prev_world" in max_end.__dict__:
+        while max_end != world:
             actions.append(max_end.action_from_prev_taken)
             max_end = max_end.prev_world
 
-        return actions[-1]
+        return actions
+
+    def get_action(self, world: World) -> Action:
+        if self._actions is None:
+            self._actions = self.do_bfs(world)
+
+        return self._actions.pop()
 
     def get_world_hashstr(self, world: World):
         return "{},{},{}".format(world.cur_pos.x, world.cur_pos.y, world.dots)

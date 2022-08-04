@@ -79,6 +79,7 @@ def main(args):
                 level_finished = True
             except RetryLevelException as e:
                 pass
+    print("Total game score: {}".format(total_score))
 
 
 def parse_args():
