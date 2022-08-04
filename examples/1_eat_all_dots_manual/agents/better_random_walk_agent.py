@@ -46,7 +46,7 @@ class BetterRandomWalkAgent(BaseAgent):
 
     def get_action(self, world: World) -> Action:
         if self._actions is None:
-            self._actions = self.do_random_walks(world, n_trials=40)
+            self._actions = self.do_random_walks(world, n_trials=80)
 
         return self._actions.pop()
 

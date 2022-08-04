@@ -26,7 +26,15 @@ class World:
     def map(self):
         return self._map
 
+    @map.setter
+    def map(self,new_map):
+        self._map = new_map
+
     def copy(self):
+        new_dots = {Point(d) for d in self.dots}
+        return World(self._rules,self.map,new_dots,Point(self.cur_pos),self._cur_score,self.tick_num)
+
+    def full_copy(self):
         new_dots = {Point(d) for d in self.dots}
         return World(self._rules,self.map.copy(),new_dots,Point(self.cur_pos),self._cur_score,self.tick_num)
 

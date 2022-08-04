@@ -39,7 +39,7 @@ def play_level(current_world: World, agent_class: BaseAgent):
 
     # draw initital world
     while not current_world.is_finished():
-        action = agent.get_action(current_world.copy())
+        action = agent.get_action(current_world.full_copy())
         current_world = current_world.apply_action(action)
         wrs.render_world(current_world)
         sleep(0.05)
