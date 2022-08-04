@@ -30,23 +30,27 @@ def raise_if_special_keys_pressed():
                 raise QuitGameException()
 
 
-def play_level(current_world: World, agent_class: BaseAgent):
-    wrs = WorldRenderSimple(current_world.map.size_x, current_world.map.size_y, agent_name=AGENT_NAME)
+def play_level(current_world: World, agent_class: BaseAgent, args):
+    if not args.daemon:
+        wrs = WorldRenderSimple(current_world.map.size_x, current_world.map.size_y, agent_name=AGENT_NAME)
 
     agent = agent_class()
 
-    wrs.render_world(current_world)
+    if not args.daemon:
+        wrs.render_world(current_world)
 
     # draw initital world
     while not current_world.is_finished():
         action = agent.get_action(current_world.full_copy())
         current_world = current_world.apply_action(action)
-        wrs.render_world(current_world)
-        sleep(0.05)
-        raise_if_special_keys_pressed()
+        if not args.daemon:
+            wrs.render_world(current_world)
+            sleep(0.05)
+            raise_if_special_keys_pressed()
         # draw world + score
-    wrs.render_world(current_world)
-    press_any_key()
+    if not args.daemon:
+        wrs.render_world(current_world)
+        press_any_key()
     return current_world.score
 
 
@@ -72,7 +76,7 @@ def main(args):
             try:
                 map, dots = ll.load_level(level_name)
                 current_world = World(Rules(), map, dots, map.start_pos, total_score)
-                score = play_level(current_world, agent_class)
+                score = play_level(current_world, agent_class, args)
                 total_score = score
                 level_finished = True
             except NextLevelException as e:
@@ -85,6 +89,7 @@ def main(args):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-a", "--agent", type=str, default="keyboard_agent")
+    parser.add_argument('-d',"--daemon", action='store_true')
     return parser.parse_args()
 
 

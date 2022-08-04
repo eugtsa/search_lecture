@@ -3,6 +3,9 @@ agent=keyboard_agent
 run:
 	$(PWD)/miniconda_pygame/bin/python ./game.py --agent $(agent)
 
+run_no_gui:
+	$(PWD)/miniconda_pygame/bin/python ./game.py --agent $(agent) --daemon
+
 install: download_miniconda
 	chmod 755 ./miniconda.sh
 	./miniconda.sh -b -p $(PWD)/miniconda_pygame -f && $(PWD)/miniconda_pygame/bin/conda config --set auto_activate_base false

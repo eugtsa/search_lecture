@@ -37,10 +37,16 @@ By default, the game will start in keyboard mode. Keyboard controls:
 Add the argument `agent` to the game start command to run your agent. For example:
 
 ```shell
-make run agent=random_walk_agent 
+make run agent=naive_random_walk_agent 
 ```
 
 To start the game with your own custom agent put your agent to the ./agents folder. Agent module should be named in underscore notation (my_custom_agent) and agent class in it should be named the same but in camel case notation (MyCustomAgent)
+
+To start the game without the gui, use `run_no_gui` for example:
+
+```shell
+make run_no_gui agent=better_random_walk_agent
+``` 
 
 ### Game goal
 
