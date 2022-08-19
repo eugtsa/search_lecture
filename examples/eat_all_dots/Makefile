@@ -45,3 +45,6 @@ download_miniconda_macos_x86_64:
 download_miniconda_macos_m1:
 	@curl https://repo.anaconda.com/miniconda/Miniconda3-py38_4.12.0-MacOSX-arm64.sh -o miniconda.sh
 
+list_agents:
+	@find ./agents -maxdepth 1 -type f -name '*.py' | sed "s/...$$//" | sed "s/.........//"
+
