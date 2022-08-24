@@ -93,3 +93,6 @@ class World:
             cur_score=self._cur_score + score_change,
             tick_num=self.tick_num + 1,
         )
+
+    def __lt__(self,other):
+        return self.score<other.score
