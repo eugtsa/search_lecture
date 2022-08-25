@@ -21,6 +21,7 @@ class World:
         self._cur_pos = cur_pos
         self._cur_score = cur_score
         self._tick_num = tick_num
+        self.action_from_prev_taken = None
 
     @property
     def map(self):
