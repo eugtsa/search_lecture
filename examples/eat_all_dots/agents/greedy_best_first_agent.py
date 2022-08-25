@@ -52,7 +52,13 @@ class GreedyBestFirstAgent(BaseAgent):
         return actions
 
     def heuristic(self, prev_state, cur_state):
-        return (5 + prev_state.score - cur_state.score) +len(cur_state.dots)
+        value = 100*len(cur_state.dots)
+        if len(cur_state.dots)>0:
+            value += min(self.manhattan_distance(d,cur_state.cur_pos) for d in cur_state.dots)
+        return value
+
+    def manhattan_distance(self,p1,p2):
+        return abs(p1.x-p2.x)+abs(p1.y-p2.y)
 
     def get_action(self, world: World) -> Action:
         if self._actions is None:
@@ -61,7 +67,7 @@ class GreedyBestFirstAgent(BaseAgent):
         return self._actions.pop()
 
     def get_world_hashstr(self, world: World):
-        return "{},{},{},{}".format(world.cur_pos.x, world.cur_pos.y, world.dots, world.score)
+        return "{},{},{},{}".format(world.cur_pos.x, world.cur_pos.y, world.dots, world.action_from_prev_taken)
 
     def get_allowed_actions(self, world: World):
         allowed_actions = list()
