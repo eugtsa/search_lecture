@@ -17,47 +17,33 @@ class UcsAgent(BaseAgent):
             self.get_world_hashstr(world),
         }
 
-        start_score = world.score
-
         states_heap = list()
         heapify(states_heap)
 
         heappush(states_heap,(0,world))
 
-        possible_ends = list()
-
         while len(states_heap)>0:
             prev_heap_score, state_to_explore = heappop(states_heap)
             if state_to_explore.is_finished():
-                possible_ends.append(state_to_explore)
                 break
             else:
                 for action in self.get_allowed_actions(state_to_explore):
-                    new_state = state_to_explore.copy().apply_action(action)
+                    new_state = state_to_explore.apply_action(action)
                     new_world_hashstr = self.get_world_hashstr(new_state)
                     if new_world_hashstr not in states_been_at:
-                        if new_state.score<start_score-20:
-                            continue
                         new_state.prev_world = state_to_explore
                         new_state.action_from_prev_taken = action
                         states_been_at.add(new_world_hashstr)
                         score_for_heap = prev_heap_score + (5 + state_to_explore.score - new_state.score)
                         heappush(states_heap,(score_for_heap, new_state))
 
-        # getting maximum end for game
-        max_end = possible_ends[0]
-        max_end_score = max_end.score
-        for end in possible_ends:
-            if end.score > max_end_score:
-                max_end_score = end.score
-                max_end = end
-        print("Possible endgame scores: " + str([end.score for end in possible_ends]))
+        print("Possible endgame scores: " + str(state_to_explore.score))
 
         # backtracking the actions from best end
         actions = list()
-        while max_end != world:
-            actions.append(max_end.action_from_prev_taken)
-            max_end = max_end.prev_world
+        while state_to_explore != world:
+            actions.append(state_to_explore.action_from_prev_taken)
+            state_to_explore = state_to_explore.prev_world
 
         return actions
 
