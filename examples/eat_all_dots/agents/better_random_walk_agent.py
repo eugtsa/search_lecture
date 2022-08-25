@@ -11,7 +11,7 @@ class BetterRandomWalkAgent(BaseAgent):
         super().__init__()
         self._actions = None
 
-    def do_random_walks(self, world: World, n_trials: int = 10):
+    def do_search(self, world: World, n_trials: int = 20):
         trials_ends = list()
         for t in range(n_trials):
             trial_end = False
@@ -46,7 +46,7 @@ class BetterRandomWalkAgent(BaseAgent):
 
     def get_action(self, world: World) -> Action:
         if self._actions is None:
-            self._actions = self.do_random_walks(world, n_trials=80)
+            self._actions = self.do_search(world, n_trials=80)
 
         return self._actions.pop()
 

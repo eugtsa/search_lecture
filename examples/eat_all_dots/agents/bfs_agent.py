@@ -12,7 +12,7 @@ class BfsAgent(BaseAgent):
         super().__init__()
         self._actions = None
 
-    def do_bfs(self, world: World):
+    def do_search(self, world: World):
         # remember where we have been already
         states_been_at = {
             self.get_world_hashstr(world),
@@ -60,7 +60,7 @@ class BfsAgent(BaseAgent):
 
     def get_action(self, world: World) -> Action:
         if self._actions is None:
-            self._actions = self.do_bfs(world)
+            self._actions = self.do_search(world)
 
         return self._actions.pop()
 
