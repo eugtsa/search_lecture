@@ -6,7 +6,7 @@ from domain.point import Point
 from heapq import heappush,heappop,heapify
 
 
-class AstarAgentV1(BaseAgent):
+class AstarAgent(BaseAgent):
     def __init__(self) -> None:
         super().__init__()
         self._actions = None
