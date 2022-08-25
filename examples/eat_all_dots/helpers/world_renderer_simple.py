@@ -45,7 +45,7 @@ class WorldRenderSimple:
         for d in world.dots:
             self._draw_dot(d)
 
-        self._draw_finish_pos(world.map.finish_pos)
+       # self._draw_finish_pos(world.map.finish_pos)
         self._draw_score(world._cur_score, world.map, world.tick_num)
         self._draw_pac_man(world.cur_pos)
         if world.is_finished():

@@ -3,34 +3,30 @@ from domain.action import Action
 from domain.world import World
 from domain.base_agent import BaseAgent
 from domain.point import Point
-from heapq import heappush,heappop,heapify
+from queue import Queue
 
 
-class GreedyBestFirstAgent(BaseAgent):
+class ExhaustiveBfsAgent(BaseAgent):
     def __init__(self) -> None:
         super().__init__()
         self._actions = None
 
-    def do_greedy_best(self, world):
+    def do_bfs(self, world: World):
         # remember where we have been already
         states_been_at = {
             self.get_world_hashstr(world),
         }
+        states_queue = Queue()
+        states_queue.put(world)
 
         start_score = world.score
 
-        states_heap = list()
-        heapify(states_heap)
-
-        heappush(states_heap,(0,world))
-
         possible_ends = list()
 
-        while len(states_heap)>0:
-            _, state_to_explore = heappop(states_heap)
+        while not states_queue.empty():
+            state_to_explore = states_queue.get()
             if state_to_explore.is_finished():
                 possible_ends.append(state_to_explore)
-                break
             else:
                 for action in self.get_allowed_actions(state_to_explore):
                     new_state = state_to_explore.copy().apply_action(action)
@@ -41,8 +37,7 @@ class GreedyBestFirstAgent(BaseAgent):
                         new_state.prev_world = state_to_explore
                         new_state.action_from_prev_taken = action
                         states_been_at.add(new_world_hashstr)
-                        score_for_heap = - self.heuristic(state_to_explore, new_state)
-                        heappush(states_heap,(score_for_heap, new_state))
+                        states_queue.put(new_state)
 
         # getting maximum end for game
         max_end = possible_ends[0]
@@ -61,12 +56,9 @@ class GreedyBestFirstAgent(BaseAgent):
 
         return actions
 
-    def heuristic(self, prev_state, cur_state):
-        return cur_state.score-prev_state.score
-
     def get_action(self, world: World) -> Action:
         if self._actions is None:
-            self._actions = self.do_greedy_best(world)
+            self._actions = self.do_bfs(world)
 
         return self._actions.pop()
 

@@ -21,17 +21,22 @@ class DfsAgent(BaseAgent):
         states_queue = LifoQueue()
         states_queue.put(world)
 
+        start_score = world.score
+
         possible_ends = list()
 
         while not states_queue.empty():
             state_to_explore = states_queue.get()
             if state_to_explore.is_finished():
                 possible_ends.append(state_to_explore)
+                break
             else:
                 for action in self.get_allowed_actions(state_to_explore):
                     new_state = state_to_explore.copy().apply_action(action)
                     new_world_hashstr = self.get_world_hashstr(new_state)
                     if new_world_hashstr not in states_been_at:
+                        if new_state.score<start_score-10:
+                            continue
                         new_state.prev_world = state_to_explore
                         new_state.action_from_prev_taken = action
                         states_been_at.add(new_world_hashstr)
@@ -61,7 +66,7 @@ class DfsAgent(BaseAgent):
         return self._actions.pop()
 
     def get_world_hashstr(self, world: World):
-        return "{},{},{}".format(world.cur_pos.x, world.cur_pos.y, world.dots)
+        return "{},{},{},{}".format(world.cur_pos.x, world.cur_pos.y, world.dots, world.score)
 
     def get_allowed_actions(self, world: World):
         allowed_actions = list()

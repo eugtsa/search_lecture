@@ -9,20 +9,18 @@ class Map:
         size_y: int,
         walls: List[Point],
         start_pos: Point,
-        finish_pos: Point,
     ) -> None:
         self._size_x = size_x
         self._size_y = size_y
         self._walls = set(walls)
         self._start_pos = start_pos
-        self._finish_pos = finish_pos
 
     @property
     def start_pos(self):
         return self._start_pos
 
     def copy(self):
-        return Map(self.size_x,self.size_y,[Point(w) for w in self.walls],Point(self.start_pos),Point(self._finish_pos))
+        return Map(self.size_x,self.size_y,[Point(w) for w in self.walls],Point(self.start_pos))
 
     @property
     def finish_pos(self):

@@ -16,7 +16,6 @@ class LevelLoader:
             walls = list()
             dots = set()
             start_pos = None
-            finish_pos = None
             for y, l in enumerate(f.readlines()):
                 max_size_y += 1
 
@@ -40,7 +39,6 @@ class LevelLoader:
                 size_y=max_size_y,
                 walls=walls,
                 start_pos=start_pos,
-                finish_pos=finish_pos,
             ),
             dots,
         )

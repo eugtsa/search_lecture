@@ -55,7 +55,7 @@ class World:
         return self._cur_pos
 
     def is_finished(self):
-        return self._cur_pos == self._map.finish_pos
+        return len(self.dots)==0
 
     def apply_action(self, action: Action):
         new_pos = self._cur_pos
@@ -80,9 +80,6 @@ class World:
         elif new_pos in self._dots:
             score_change = self._rules.dot_score
             new_dots = set([d for d in self._dots if d != new_pos])
-
-        elif new_pos == self._map.finish_pos:
-            score_change = self._rules.finish_score
 
         # returning new world state
         return World(

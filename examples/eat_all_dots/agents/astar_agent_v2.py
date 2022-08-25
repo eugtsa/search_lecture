@@ -6,12 +6,12 @@ from domain.point import Point
 from heapq import heappush,heappop,heapify
 
 
-class GreedyBestFirstAgent(BaseAgent):
+class AstarAgentV2(BaseAgent):
     def __init__(self) -> None:
         super().__init__()
         self._actions = None
 
-    def do_greedy_best(self, world):
+    def do_astar_search(self, world):
         # remember where we have been already
         states_been_at = {
             self.get_world_hashstr(world),
@@ -27,7 +27,7 @@ class GreedyBestFirstAgent(BaseAgent):
         possible_ends = list()
 
         while len(states_heap)>0:
-            _, state_to_explore = heappop(states_heap)
+            prev_heap_score, state_to_explore = heappop(states_heap)
             if state_to_explore.is_finished():
                 possible_ends.append(state_to_explore)
                 break
@@ -40,8 +40,15 @@ class GreedyBestFirstAgent(BaseAgent):
                             continue
                         new_state.prev_world = state_to_explore
                         new_state.action_from_prev_taken = action
+                        
                         states_been_at.add(new_world_hashstr)
-                        score_for_heap = - self.heuristic(state_to_explore, new_state)
+
+                        # this is what makes it an A* - we added heuristics on top of greedy
+                        score_for_heap = \
+                            prev_heap_score + \
+                            (5 + state_to_explore.score - new_state.score) + \
+                            self.compute_heuristics(state_to_explore,new_state)
+                        
                         heappush(states_heap,(score_for_heap, new_state))
 
         # getting maximum end for game
@@ -61,12 +68,15 @@ class GreedyBestFirstAgent(BaseAgent):
 
         return actions
 
-    def heuristic(self, prev_state, cur_state):
-        return cur_state.score-prev_state.score
+    def compute_heuristics(self, prev_state:World, next_state:World):
+        # smaller the heuristic score - closer the node to be the first explored
+        heuristics_total_score = len(next_state.dots)/10
+
+        return heuristics_total_score
 
     def get_action(self, world: World) -> Action:
         if self._actions is None:
-            self._actions = self.do_greedy_best(world)
+            self._actions = self.do_astar_search(world)
 
         return self._actions.pop()
 

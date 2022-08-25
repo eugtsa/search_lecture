@@ -1,4 +1,4 @@
 XXXXXX
-X   FX
-XS   X
+X   .X
+XS  .X
 XXXXXX
