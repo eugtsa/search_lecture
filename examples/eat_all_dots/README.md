@@ -50,11 +50,11 @@ make run_no_gui agent=better_random_walk_agent
 
 ### Game goal
 
-Target of the game is to get maximum score in the end! All scores of completed levels will be summed up for the finish score.
+Target of the game is to eat all dots and get maximum score in the end! All scores of completed levels will be summed up for the finish score.
 
 ### Game rules
 
-Each pacman step will decrease the score by 1 credit. Each bump into the wall will not only stop pacman but also decrease the score by 3 credits. Each small dot eaten by pacman will increase score by 10 credits. Each finished level will add 20 credits to the final score.
+Each pacman step will decrease the score by 1 credit. Each bump into the wall will not only stop pacman but also decrease the score by 3 credits. Each small dot eaten by pacman will increase score by 10 credits.
 
 ## Who is the author?
 
