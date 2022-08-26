@@ -33,8 +33,6 @@ class GreedyBestFirstAgent(BaseAgent):
                     new_state = state_to_explore.apply_action(action)
                     new_world_hashstr = self.get_world_hashstr(new_state)
                     if new_world_hashstr not in states_been_at:
-                        if new_state.score<start_score-10:
-                            continue
                         new_state.prev_world = state_to_explore
                         new_state.action_from_prev_taken = action
                         states_been_at.add(new_world_hashstr)
