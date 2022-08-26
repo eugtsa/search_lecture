@@ -66,8 +66,9 @@ class AstarAgent(BaseAgent):
     def get_cost(self,game_rules, prev_world, next_world):
         return 5 + prev_world.score - next_world.score
 
+    # admissable heuristic - never overestimates the actual minimal cost
     def heuristic(self, prev_state, cur_state):
-        value = 0#20 * len(cur_state.dots)
+        value = 0
         if len(cur_state.dots) > 0:
             value += max(
                 self.manhattan_distance(d, cur_state.cur_pos) for d in cur_state.dots
