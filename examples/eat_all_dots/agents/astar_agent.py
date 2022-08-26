@@ -41,8 +41,8 @@ class AstarAgent(BaseAgent):
 
                     new_world_hashstr = self.get_world_hashstr(new_state)
                     if new_world_hashstr not in states_been_at:
-                        if new_state.score < start_score - 10:
-                            continue
+                        # if new_state.score < start_score - 10:
+                        #     continue
 
                         states_been_at.add(new_world_hashstr)
 
@@ -53,7 +53,7 @@ class AstarAgent(BaseAgent):
 
                         heappush(states_heap, (score_for_heap, new_state))
 
-        print("Possible endgame scores: " + str(state_to_explore.score))
+        print("Endgame score: " + str(state_to_explore.score))
 
         # backtracking the actions from best end
         actions = list()

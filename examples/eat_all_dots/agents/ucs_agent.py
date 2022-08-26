@@ -37,7 +37,7 @@ class UcsAgent(BaseAgent):
                         score_for_heap = prev_heap_score + (5 + state_to_explore.score - new_state.score)
                         heappush(states_heap,(score_for_heap, new_state))
 
-        print("Possible endgame scores: " + str(state_to_explore.score))
+        print("Endgame score: " + str(state_to_explore.score))
 
         # backtracking the actions from best end
         actions = list()

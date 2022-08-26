@@ -37,7 +37,7 @@ class GreedyBestFirstAgent(BaseAgent):
                         score_for_heap = self.heuristic(state_to_explore, new_state)
                         heappush(states_heap, (score_for_heap, new_state))
 
-        print("Possible endgame score: " + str(state_to_explore.score))
+        print("Endgame score: " + str(state_to_explore.score))
 
         # backtracking the actions from best end
         actions = list()

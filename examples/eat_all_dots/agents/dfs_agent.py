@@ -35,7 +35,7 @@ class DfsAgent(BaseAgent):
                         states_been_at.add(new_world_hashstr)
                         states_queue.put(new_state)
 
-        print("Possible endgame scores: " + str(state_to_explore.score))
+        print("Endgame score: " + str(state_to_explore.score))
 
         # backtracking the actions from best end
         actions = list()
