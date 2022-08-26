@@ -19,7 +19,7 @@ class BetterRandomWalkAgent(BaseAgent):
             state_to_explore = world
             while trial_end is False:
                 action = random.choice(self.get_allowed_actions(state_to_explore))
-                new_state = state_to_explore.copy().apply_action(action)
+                new_state = state_to_explore.apply_action(action)
                 new_state.prev_world = state_to_explore
                 new_state.action_from_prev_taken = action
                 state_to_explore = new_state

@@ -24,7 +24,7 @@ class NaiveBfsAgent(BaseAgent):
                 possible_goals.append(state_to_explore)
             else:
                 for action in self.get_allowed_actions(state_to_explore):
-                    new_state = state_to_explore.copy().apply_action(action)
+                    new_state = state_to_explore.apply_action(action)
                     new_world_hashstr = self.get_world_hashstr(new_state)
                     if new_world_hashstr not in states_been_at:
                         new_state.prev_world = state_to_explore
