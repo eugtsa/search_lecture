@@ -3,7 +3,7 @@ from domain.action import Action
 from domain.world import World
 from domain.base_agent import BaseAgent
 from domain.point import Point
-from heapq import heappush,heappop,heapify
+from heapq import heappush, heappop, heapify
 
 
 class GreedyBestFirstAgent(BaseAgent):
@@ -17,14 +17,12 @@ class GreedyBestFirstAgent(BaseAgent):
             self.get_world_hashstr(world),
         }
 
-        start_score = world.score
-
         states_heap = list()
         heapify(states_heap)
 
-        heappush(states_heap,(0,world))
+        heappush(states_heap, (0, world))
 
-        while len(states_heap)>0:
+        while len(states_heap) > 0:
             _, state_to_explore = heappop(states_heap)
             if state_to_explore.is_finished():
                 break
@@ -37,9 +35,9 @@ class GreedyBestFirstAgent(BaseAgent):
                         new_state.action_from_prev_taken = action
                         states_been_at.add(new_world_hashstr)
                         score_for_heap = self.heuristic(state_to_explore, new_state)
-                        heappush(states_heap,(score_for_heap, new_state))
+                        heappush(states_heap, (score_for_heap, new_state))
 
-        print("Possible endgame scores: " + str(state_to_explore.score))
+        print("Possible endgame score: " + str(state_to_explore.score))
 
         # backtracking the actions from best end
         actions = list()
@@ -50,13 +48,15 @@ class GreedyBestFirstAgent(BaseAgent):
         return actions
 
     def heuristic(self, prev_state, cur_state):
-        value = 100*len(cur_state.dots)
-        if len(cur_state.dots)>0:
-            value += min(self.manhattan_distance(d,cur_state.cur_pos) for d in cur_state.dots)
+        value = 100 * len(cur_state.dots)
+        if len(cur_state.dots) > 0:
+            value += min(
+                self.manhattan_distance(d, cur_state.cur_pos) for d in cur_state.dots
+            )
         return value
 
-    def manhattan_distance(self,p1,p2):
-        return abs(p1.x-p2.x)+abs(p1.y-p2.y)
+    def manhattan_distance(self, p1, p2):
+        return abs(p1.x - p2.x) + abs(p1.y - p2.y)
 
     def get_action(self, world: World) -> Action:
         if self._actions is None:
@@ -65,7 +65,9 @@ class GreedyBestFirstAgent(BaseAgent):
         return self._actions.pop()
 
     def get_world_hashstr(self, world: World):
-        return "{},{},{},{}".format(world.cur_pos.x, world.cur_pos.y, world.dots, world.action_from_prev_taken)
+        return "{},{},{},{}".format(
+            world.cur_pos.x, world.cur_pos.y, world.dots, world.action_from_prev_taken
+        )
 
     def get_allowed_actions(self, world: World):
         allowed_actions = list()

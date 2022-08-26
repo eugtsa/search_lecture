@@ -3,7 +3,7 @@ from domain.action import Action
 from domain.world import World
 from domain.base_agent import BaseAgent
 from domain.point import Point
-from heapq import heappush,heappop,heapify
+from heapq import heappush, heappop, heapify
 
 
 class AstarAgent(BaseAgent):
@@ -22,30 +22,36 @@ class AstarAgent(BaseAgent):
         states_heap = list()
         heapify(states_heap)
 
-        heappush(states_heap,(0,world))
+        heappush(states_heap, (0, world))
 
-        while len(states_heap)>0:
+        while len(states_heap) > 0:
             prev_heap_score, state_to_explore = heappop(states_heap)
+
+            # removing prev heuristic value out after we prioritized next state using it
+            if state_to_explore.prev_world is not None:
+                prev_heap_score = prev_heap_score - self.heuristic(state_to_explore.prev_world,state_to_explore)
+            
             if state_to_explore.is_finished():
                 break
             else:
                 for action in self.get_allowed_actions(state_to_explore):
                     new_state = state_to_explore.apply_action(action)
+                    new_state.prev_world = state_to_explore
+                    new_state.action_from_prev_taken = action
+
                     new_world_hashstr = self.get_world_hashstr(new_state)
                     if new_world_hashstr not in states_been_at:
-                        if new_state.score<start_score-10:
+                        if new_state.score < start_score - 10:
                             continue
-                        new_state.prev_world = state_to_explore
-                        new_state.action_from_prev_taken = action
-                        
+
                         states_been_at.add(new_world_hashstr)
 
                         # this is what makes it an A* - we added heuristics on top of greedy
-                        score_for_heap = \
-                            prev_heap_score + \
-                            self.compute_heuristics(state_to_explore,new_state)
-                        
-                        heappush(states_heap,(score_for_heap, new_state))
+                        score_for_heap = prev_heap_score + self.get_cost(world.rules, state_to_explore,new_state) + self.heuristic(
+                            state_to_explore, new_state
+                        )
+
+                        heappush(states_heap, (score_for_heap, new_state))
 
         print("Possible endgame scores: " + str(state_to_explore.score))
 
@@ -57,12 +63,19 @@ class AstarAgent(BaseAgent):
 
         return actions
 
-    def compute_heuristics(self, prev_state:World, next_state:World):
-        # smaller the heuristic score - closer the node to be the first explored
-        heuristics_total_score = (5 + prev_state.score - next_state.score)
-        heuristics_total_score += len(next_state.dots)/10
+    def get_cost(self,game_rules, prev_world, next_world):
+        return 5 + prev_world.score - next_world.score
 
-        return heuristics_total_score
+    def heuristic(self, prev_state, cur_state):
+        value = 0#20 * len(cur_state.dots)
+        if len(cur_state.dots) > 0:
+            value += max(
+                self.manhattan_distance(d, cur_state.cur_pos) for d in cur_state.dots
+            )
+        return value
+
+    def manhattan_distance(self, p1, p2):
+        return abs(p1.x - p2.x) + abs(p1.y - p2.y)
 
     def get_action(self, world: World) -> Action:
         if self._actions is None:
@@ -71,7 +84,9 @@ class AstarAgent(BaseAgent):
         return self._actions.pop()
 
     def get_world_hashstr(self, world: World):
-        return "{},{},{},{}".format(world.cur_pos.x, world.cur_pos.y, world.dots, world.score)
+        return "{},{},{},{}".format(
+            world.cur_pos.x, world.cur_pos.y, world.dots, world.score
+        )
 
     def get_allowed_actions(self, world: World):
         allowed_actions = list()

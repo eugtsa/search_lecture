@@ -22,6 +22,11 @@ class World:
         self._cur_score = cur_score
         self._tick_num = tick_num
         self.action_from_prev_taken = None
+        self.prev_world = None
+
+    @property
+    def rules(self):
+        return self._rules
 
     @property
     def map(self):
