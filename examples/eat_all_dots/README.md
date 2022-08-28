@@ -137,7 +137,7 @@ To run your agent, plug it's file name without ``.py`` extention into any comman
 
 ## What commands are supported?
 
-- ``make run`` will run ``keyboard_agent by default
+- ``make run`` will run ``keyboard_agent`` by default
 - ``make run`` command with ``agent=`` argument will run agent specified after equal sign with graphical user interface. To advance the agent to the next level you can either:
     - skip the level pressing ``n`` on the keyboard
     - wait until agent will finish the current level and then press any key on the keyboard
