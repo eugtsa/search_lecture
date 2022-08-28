@@ -58,7 +58,7 @@ Each pacman step will decrease the score by 1 credit. Each bump into the wall wi
 
 ### How to write your own algorithm?
 
-In order to write your algorithm you should create class which implements BaseAgent. Base Agent consists of one method, ``get_action``. Take a look at the naive_random_walk_agent.py:
+In order to write your algorithm you should create class which implements BaseAgent. BaseAgent have only one method which you need to implement: ``get_action``. Here is an example of the naive_random_walk_agent.py:
 
 
 ```python
@@ -75,9 +75,9 @@ class NaiveRandomWalkAgent(BaseAgent):
         return random.choice([Action.UP, Action.DOWN, Action.LEFT, Action.RIGHT])
 ``` 
 
-As you can see, naive random walk agent does not take any information about the ``world`` variable at all! It just tryies to return some random action.
+As you can see, naive random walk agent does not take any information about the ``world`` variable at all! It just return random action.
 
-Here is another example, where you can see usage of the world information, random walk agent who is not bumping into the walls:
+Here is another example, where you can see the usage of world information. This one is a random walk agent which is not bumping into the walls:
 
 
 ```python
@@ -111,7 +111,7 @@ As you can see, this agent will first create the list of allowed actions and get
 
 ### How to plug your algorithm (agent) into eat all dots game
 
-CUrrently, only python is supported. If you want to support any other language to write your agent, please mail me - I'll extend this example to support other languages.
+Currently, only python is supported. If you whould like to see any other language here, please mail me - I'll extend this game to support other languages.
 
 To plug your python agent into this game:
 
