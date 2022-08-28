@@ -149,4 +149,4 @@ To run your agent, plug it's file name without ``.py`` extention into any comman
  
 ## Who is the author?
 
-Evgenii Tsatsorin - eugtsa@gmail.com - evgenii.tsatsorin@behavox.com
+Evgenii Tsatsorin - eugtsa@gmail.com
