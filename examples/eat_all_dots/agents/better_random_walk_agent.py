@@ -1,9 +1,9 @@
-from domain.action import Action
+import random
 
+from domain.action import Action
 from domain.world import World
 from domain.base_agent import BaseAgent
 from domain.point import Point
-import random
 
 
 class BetterRandomWalkAgent(BaseAgent):
@@ -13,12 +13,13 @@ class BetterRandomWalkAgent(BaseAgent):
 
     def do_search(self, world: World, n_trials: int = 20):
         trials_ends = list()
-        for t in range(n_trials):
+        for _ in range(n_trials):
             trial_end = False
 
             state_to_explore = world
             while trial_end is False:
-                action = random.choice(self.get_allowed_actions(state_to_explore))
+                action = random.choice(
+                    self.get_allowed_actions(state_to_explore))
                 new_state = state_to_explore.apply_action(action)
                 new_state.prev_world = state_to_explore
                 new_state.action_from_prev_taken = action
@@ -34,7 +35,7 @@ class BetterRandomWalkAgent(BaseAgent):
             if end.score > max_end_score:
                 max_end_score = end.score
                 max_end = end
-        print("Possible endgame scores: " + str([end.score for end in trials_ends]))
+        print("Endgame score: " + str([end.score for end in trials_ends]))
 
         # backtracking the actions from best end
         actions = list()

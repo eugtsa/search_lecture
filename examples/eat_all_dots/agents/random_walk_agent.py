@@ -1,9 +1,9 @@
-from domain.action import Action
+import random
 
+from domain.action import Action
 from domain.world import World
 from domain.base_agent import BaseAgent
 from domain.point import Point
-import random
 
 
 class RandomWalkAgent(BaseAgent):
